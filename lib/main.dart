@@ -13,10 +13,10 @@ import 'domain/usecases/auth/sign_up.dart';
 import 'presentation/blocs/app_bloc.dart';
 import 'presentation/blocs/auth/auth_bloc.dart';
 import 'presentation/blocs/auth/auth_event.dart';
-import 'presentation/blocs/auth/auth_state.dart';
 import 'presentation/screens/app_list_screen.dart';
 import 'presentation/screens/auth/login_screen.dart';
 import 'presentation/screens/auth/register_screen.dart';
+import 'presentation/widgets/auth_guard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,16 +75,11 @@ class RoostApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        initialRoute: '/',
+        home: AuthGuard(
+          authenticatedRoute: const AppListScreen(),
+          unauthenticatedRoute: const LoginScreen(),
+        ),
         routes: {
-          '/': (context) => BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state is Authenticated) {
-                    return const AppListScreen();
-                  }
-                  return const LoginScreen();
-                },
-              ),
           '/login': (context) => const LoginScreen(),
           '/register': (context) => const RegisterScreen(),
           '/apps': (context) => const AppListScreen(),
