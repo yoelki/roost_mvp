@@ -46,3 +46,11 @@ app.*.map.json
 
 # Test related
 /coverage/
+
+# Firebase configuration files
+**/google-services.json
+**/GoogleService-Info.plist
+lib/firebase_options.dart
+
+# Environment files
+.env*

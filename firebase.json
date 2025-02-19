@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"roost-mvp","appId":"1:3289579495:android:965b41e79d7f15bd980742","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"roost-mvp","appId":"1:3289579495:ios:471428be87a474ac980742","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"roost-mvp","appId":"1:3289579495:ios:e4860ba9ab3e90bb980742","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"roost-mvp","configurations":{"android":"1:3289579495:android:965b41e79d7f15bd980742","ios":"1:3289579495:ios:471428be87a474ac980742","macos":"1:3289579495:ios:e4860ba9ab3e90bb980742","web":"1:3289579495:web:fcb3ee9ae9a2a901980742","windows":"1:3289579495:web:dcfbf61d6e663e82980742"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "roost-mvp-cc64a",
+          "appId": "1:878309225949:android:4fc398e2ce934e2c8d3234",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "roost-mvp-cc64a",
+          "appId": "1:878309225949:ios:6485176af678ee8a8d3234",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "roost-mvp-cc64a",
+          "appId": "1:878309225949:ios:6485176af678ee8a8d3234",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "roost-mvp-cc64a",
+          "configurations": {
+            "android": "1:878309225949:android:4fc398e2ce934e2c8d3234",
+            "ios": "1:878309225949:ios:6485176af678ee8a8d3234",
+            "macos": "1:878309225949:ios:6485176af678ee8a8d3234",
+            "web": "1:878309225949:web:bdaf8f6017e827988d3234",
+            "windows": "1:878309225949:web:499a92684de40ff48d3234"
+          }
+        }
+      }
+    }
+  }
+}

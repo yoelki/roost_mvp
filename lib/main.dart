@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_options.dart';
 
-import 'data/datasources/remote_data_source.dart';
+import 'data/datasources/firestore_data_source.dart';
 import 'data/repositories/app_repository_impl.dart';
+import 'data/repositories/auth_repository_impl.dart';
+import 'domain/repositories/auth_repository.dart';
 import 'domain/usecases/get_apps.dart';
+import 'domain/usecases/auth/sign_in.dart';
+import 'domain/usecases/auth/sign_up.dart';
 import 'presentation/blocs/app_bloc.dart';
-import 'presentation/blocs/app_event.dart';
+import 'presentation/blocs/auth/auth_bloc.dart';
+import 'presentation/blocs/auth/auth_event.dart';
+import 'presentation/blocs/auth/auth_state.dart';
 import 'presentation/screens/app_list_screen.dart';
+import 'presentation/screens/auth/login_screen.dart';
+import 'presentation/screens/auth/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,24 +24,71 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final remoteDataSource = RemoteDataSource();
-  final repository = AppRepositoryImpl(remoteDataSource);
-  final getApps = GetApps(repository);
+  final firestoreDataSource = FirestoreDataSource();
+  final appRepository = AppRepositoryImpl(firestoreDataSource);
+  final authRepository = AuthRepositoryImpl();
 
-  runApp(RoostApp(getApps: getApps));
+  final getApps = GetApps(appRepository);
+  final signIn = SignIn(authRepository);
+  final signUp = SignUp(authRepository);
+
+  runApp(RoostApp(
+    getApps: getApps,
+    signIn: signIn,
+    signUp: signUp,
+    authRepository: authRepository,
+  ));
 }
 
 class RoostApp extends StatelessWidget {
   final GetApps getApps;
+  final SignIn signIn;
+  final SignUp signUp;
+  final AuthRepository authRepository;
 
-  const RoostApp({super.key, required this.getApps});
+  const RoostApp({
+    super.key,
+    required this.getApps,
+    required this.signIn,
+    required this.signUp,
+    required this.authRepository,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocProvider(
-        create: (context) => AppBloc(getApps)..add(FetchApps()),
-        child: const AppListScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(
+            signIn: signIn,
+            signUp: signUp,
+            authRepository: authRepository,
+          )..add(AuthCheckRequested()),
+        ),
+        BlocProvider(
+          create: (context) => AppBloc(getApps),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Roost MVP',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is Authenticated) {
+                    return const AppListScreen();
+                  }
+                  return const LoginScreen();
+                },
+              ),
+          '/login': (context) => const LoginScreen(),
+          '/register': (context) => const RegisterScreen(),
+          '/apps': (context) => const AppListScreen(),
+        },
       ),
     );
   }

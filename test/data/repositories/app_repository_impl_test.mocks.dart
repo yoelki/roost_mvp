@@ -3,12 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i3;
-import 'package:roost_mvp/data/datasources/remote_data_source.dart' as _i2;
-import 'package:roost_mvp/data/models/app_model.dart' as _i5;
+import 'package:roost_mvp/data/datasources/firestore_data_source.dart' as _i2;
+import 'package:roost_mvp/data/models/app_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,30 +23,29 @@ import 'package:roost_mvp/data/models/app_model.dart' as _i5;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [RemoteDataSource].
+/// A class which mocks [FirestoreDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRemoteDataSource extends _i1.Mock implements _i2.RemoteDataSource {
-  MockRemoteDataSource() {
+class MockFirestoreDataSource extends _i1.Mock
+    implements _i2.FirestoreDataSource {
+  MockFirestoreDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  String get apiUrl =>
-      (super.noSuchMethod(
-            Invocation.getter(#apiUrl),
-            returnValue: _i3.dummyValue<String>(
-              this,
-              Invocation.getter(#apiUrl),
-            ),
-          )
-          as String);
-
-  @override
-  _i4.Future<List<_i5.AppModel>> getApps() =>
+  _i3.Future<List<_i4.AppModel>> getApps() =>
       (super.noSuchMethod(
             Invocation.method(#getApps, []),
-            returnValue: _i4.Future<List<_i5.AppModel>>.value(<_i5.AppModel>[]),
+            returnValue: _i3.Future<List<_i4.AppModel>>.value(<_i4.AppModel>[]),
           )
-          as _i4.Future<List<_i5.AppModel>>);
+          as _i3.Future<List<_i4.AppModel>>);
+
+  @override
+  _i3.Future<void> createApp(_i4.AppModel? app) =>
+      (super.noSuchMethod(
+            Invocation.method(#createApp, [app]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }

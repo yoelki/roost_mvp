@@ -8,7 +8,7 @@
 PRODUCT_NAME = roost_mvp
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.roostMvp
+PRODUCT_BUNDLE_IDENTIFIER = com.yoelkiflezghi.roostMvp
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

@@ -1,20 +1,26 @@
 import '../../domain/entities/app_entity.dart';
 import '../../domain/repositories/app_repository.dart';
-import '../datasources/remote_data_source.dart';
+import '../datasources/firestore_data_source.dart';
 import '../models/app_model.dart';
 
 class AppRepositoryImpl implements AppRepository {
-  final RemoteDataSource remoteDataSource;
+  final FirestoreDataSource firestoreDataSource;
 
-  AppRepositoryImpl(this.remoteDataSource);
+  AppRepositoryImpl(this.firestoreDataSource);
 
   @override
   Future<List<AppModel>> getApps() async {
-    return await remoteDataSource.getApps();
+    return await firestoreDataSource.getApps();
   }
 
   @override
   Future<void> createApp(AppEntity app) async {
-    // API call to create app (omitted for brevity)
+    final appModel = AppModel(
+      id: app.id,
+      name: app.name,
+      platform: app.platform,
+      version: app.version,
+    );
+    await firestoreDataSource.createApp(appModel);
   }
 }
