@@ -31,6 +31,16 @@ void main() {
 
   Widget createWidgetUnderTest() {
     return MaterialApp(
+      initialRoute: '/apps',
+      routes: {
+        '/apps': (context) => BlocProvider<AuthBloc>.value(
+              value: mockAuthBloc,
+              child: Scaffold(
+                drawer: const AppDrawer(),
+                body: Container(),
+              ),
+            ),
+      },
       home: BlocProvider<AuthBloc>(
         create: (context) => mockAuthBloc,
         child: Builder(
@@ -97,10 +107,14 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await openDrawer(tester);
 
+      // Verify drawer is open
+      expect(find.byType(Drawer), findsOneWidget);
+
       await tester.tap(find.text('Apps'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Apps'), findsNothing);
+      // Verify drawer is closed
+      expect(find.byType(Drawer), findsNothing);
     });
   });
 }

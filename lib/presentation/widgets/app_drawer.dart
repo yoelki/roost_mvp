@@ -13,16 +13,12 @@ class AppDrawer extends StatelessWidget {
       DrawerMenuItem(
         title: 'Apps',
         icon: Icons.apps,
-        selected: true,
-        onTap: () => Navigator.pop(context),
+        route: '/apps',
       ),
       DrawerMenuItem(
         title: 'Settings',
         icon: Icons.settings,
-        onTap: () {
-          Navigator.pop(context);
-          // TODO: Navigate to settings screen
-        },
+        route: '/settings',
       ),
       DrawerMenuItem(
         title: 'Help & Feedback',
@@ -47,7 +43,7 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           _buildDrawerHeader(context),
-          ...menuItems.map(_buildMenuItem).toList(),
+          ...menuItems.map((item) => _buildMenuItem(item, context)),
         ],
       ),
     );
@@ -83,25 +79,21 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(DrawerMenuItem item) {
-    if (item.title == 'Help & Feedback') {
-      return Column(
-        children: [
-          const Divider(),
-          ListTile(
-            leading: Icon(item.icon),
-            title: Text(item.title),
-            selected: item.selected,
-            onTap: item.onTap,
-          ),
-        ],
-      );
-    }
+  Widget _buildMenuItem(DrawerMenuItem item, BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
     return ListTile(
       leading: Icon(item.icon),
       title: Text(item.title),
-      selected: item.selected,
-      onTap: item.onTap,
+      selected: item.route != null && currentRoute == item.route,
+      onTap: item.route != null
+          ? () {
+              Navigator.pop(context);
+              if (currentRoute != item.route) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, item.route!, (_) => false);
+              }
+            }
+          : item.onTap,
     );
   }
 }

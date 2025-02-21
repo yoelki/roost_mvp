@@ -3,12 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:roost_mvp/data/datasources/firestore_data_source.dart' as _i3;
-import 'package:roost_mvp/data/models/app_model.dart' as _i5;
-import 'package:roost_mvp/data/repositories/auth_repository_impl.dart' as _i6;
+import 'package:roost_mvp/data/datasources/firestore_data_source.dart' as _i4;
+import 'package:roost_mvp/data/models/app_model.dart' as _i6;
+import 'package:roost_mvp/data/repositories/auth_repository_impl.dart' as _i7;
+import 'package:roost_mvp/data/repositories/settings_repository_impl.dart'
+    as _i8;
+import 'package:roost_mvp/domain/entities/settings_entity.dart' as _i3;
 import 'package:roost_mvp/domain/entities/user_entity.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -30,58 +33,64 @@ class _FakeUserEntity_0 extends _i1.SmartFake implements _i2.UserEntity {
     : super(parent, parentInvocation);
 }
 
+class _FakeSettingsEntity_1 extends _i1.SmartFake
+    implements _i3.SettingsEntity {
+  _FakeSettingsEntity_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [FirestoreDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFirestoreDataSource extends _i1.Mock
-    implements _i3.FirestoreDataSource {
+    implements _i4.FirestoreDataSource {
   MockFirestoreDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i5.AppModel>> getApps() =>
+  _i5.Future<List<_i6.AppModel>> getApps() =>
       (super.noSuchMethod(
             Invocation.method(#getApps, []),
-            returnValue: _i4.Future<List<_i5.AppModel>>.value(<_i5.AppModel>[]),
+            returnValue: _i5.Future<List<_i6.AppModel>>.value(<_i6.AppModel>[]),
           )
-          as _i4.Future<List<_i5.AppModel>>);
+          as _i5.Future<List<_i6.AppModel>>);
 
   @override
-  _i4.Future<void> createApp(_i5.AppModel? app) =>
+  _i5.Future<void> createApp(_i6.AppModel? app) =>
       (super.noSuchMethod(
             Invocation.method(#createApp, [app]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [AuthRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthRepositoryImpl extends _i1.Mock
-    implements _i6.AuthRepositoryImpl {
+    implements _i7.AuthRepositoryImpl {
   MockAuthRepositoryImpl() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Stream<_i2.UserEntity?> get authStateChanges =>
+  _i5.Stream<_i2.UserEntity?> get authStateChanges =>
       (super.noSuchMethod(
             Invocation.getter(#authStateChanges),
-            returnValue: _i4.Stream<_i2.UserEntity?>.empty(),
+            returnValue: _i5.Stream<_i2.UserEntity?>.empty(),
           )
-          as _i4.Stream<_i2.UserEntity?>);
+          as _i5.Stream<_i2.UserEntity?>);
 
   @override
-  _i4.Future<_i2.UserEntity> signInWithEmailAndPassword(
+  _i5.Future<_i2.UserEntity> signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#signInWithEmailAndPassword, [email, password]),
-            returnValue: _i4.Future<_i2.UserEntity>.value(
+            returnValue: _i5.Future<_i2.UserEntity>.value(
               _FakeUserEntity_0(
                 this,
                 Invocation.method(#signInWithEmailAndPassword, [
@@ -91,10 +100,10 @@ class MockAuthRepositoryImpl extends _i1.Mock
               ),
             ),
           )
-          as _i4.Future<_i2.UserEntity>);
+          as _i5.Future<_i2.UserEntity>);
 
   @override
-  _i4.Future<_i2.UserEntity> createUserWithEmailAndPassword(
+  _i5.Future<_i2.UserEntity> createUserWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -103,7 +112,7 @@ class MockAuthRepositoryImpl extends _i1.Mock
               email,
               password,
             ]),
-            returnValue: _i4.Future<_i2.UserEntity>.value(
+            returnValue: _i5.Future<_i2.UserEntity>.value(
               _FakeUserEntity_0(
                 this,
                 Invocation.method(#createUserWithEmailAndPassword, [
@@ -113,41 +122,70 @@ class MockAuthRepositoryImpl extends _i1.Mock
               ),
             ),
           )
-          as _i4.Future<_i2.UserEntity>);
+          as _i5.Future<_i2.UserEntity>);
 
   @override
-  _i4.Future<void> signOut() =>
+  _i5.Future<void> signOut() =>
       (super.noSuchMethod(
             Invocation.method(#signOut, []),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
+}
+
+/// A class which mocks [SettingsRepositoryImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSettingsRepositoryImpl extends _i1.Mock
+    implements _i8.SettingsRepositoryImpl {
+  MockSettingsRepositoryImpl() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<_i3.SettingsEntity> getSettings() =>
+      (super.noSuchMethod(
+            Invocation.method(#getSettings, []),
+            returnValue: _i5.Future<_i3.SettingsEntity>.value(
+              _FakeSettingsEntity_1(this, Invocation.method(#getSettings, [])),
+            ),
+          )
+          as _i5.Future<_i3.SettingsEntity>);
+
+  @override
+  _i5.Future<void> updateSettings(_i3.SettingsEntity? settings) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateSettings, [settings]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [FirestoreDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class IntegrationMockFirestoreDataSource extends _i1.Mock
-    implements _i3.FirestoreDataSource {
+    implements _i4.FirestoreDataSource {
   IntegrationMockFirestoreDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i5.AppModel>> getApps() =>
+  _i5.Future<List<_i6.AppModel>> getApps() =>
       (super.noSuchMethod(
             Invocation.method(#getApps, []),
-            returnValue: _i4.Future<List<_i5.AppModel>>.value(<_i5.AppModel>[]),
+            returnValue: _i5.Future<List<_i6.AppModel>>.value(<_i6.AppModel>[]),
           )
-          as _i4.Future<List<_i5.AppModel>>);
+          as _i5.Future<List<_i6.AppModel>>);
 
   @override
-  _i4.Future<void> createApp(_i5.AppModel? app) =>
+  _i5.Future<void> createApp(_i6.AppModel? app) =>
       (super.noSuchMethod(
             Invocation.method(#createApp, [app]),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i4.Future<void>);
+          as _i5.Future<void>);
 }

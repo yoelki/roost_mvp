@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:roost_mvp/data/models/app_model.dart';
+import 'package:roost_mvp/domain/entities/settings_entity.dart';
 import 'package:roost_mvp/main.dart';
 import 'package:roost_mvp/domain/usecases/get_apps.dart';
 import 'package:roost_mvp/data/repositories/app_repository_impl.dart';
@@ -12,6 +13,9 @@ import 'package:roost_mvp/domain/usecases/auth/sign_in.dart';
 import 'package:roost_mvp/domain/usecases/auth/sign_up.dart';
 import 'package:roost_mvp/data/repositories/auth_repository_impl.dart';
 import 'package:roost_mvp/domain/entities/user_entity.dart';
+import 'package:roost_mvp/data/repositories/settings_repository_impl.dart';
+import 'package:roost_mvp/domain/usecases/settings/get_settings.dart';
+import 'package:roost_mvp/domain/usecases/settings/update_settings.dart';
 
 import 'app_flow_test.mocks.dart';
 
@@ -19,6 +23,7 @@ import 'app_flow_test.mocks.dart';
 @GenerateMocks([
   FirestoreDataSource,
   AuthRepositoryImpl,
+  SettingsRepositoryImpl,
 ], customMocks: [
   MockSpec<FirestoreDataSource>(
     as: #IntegrationMockFirestoreDataSource,
@@ -30,11 +35,13 @@ void main() {
   group('App Flow Tests', () {
     late IntegrationMockFirestoreDataSource mockDataSource;
     late MockAuthRepositoryImpl mockAuthRepository;
+    late MockSettingsRepositoryImpl mockSettingsRepository;
     late UserEntity testUser;
 
     setUp(() {
       mockDataSource = IntegrationMockFirestoreDataSource();
       mockAuthRepository = MockAuthRepositoryImpl();
+      mockSettingsRepository = MockSettingsRepositoryImpl();
       testUser = UserEntity(id: '1', email: 'test@example.com');
 
       // Mock auth state changes stream with delay
@@ -67,16 +74,30 @@ void main() {
           ),
         ];
       });
+
+      // Mock settings
+      when(mockSettingsRepository.getSettings()).thenAnswer((_) async {
+        return SettingsEntity(
+          darkMode: false,
+          notificationsEnabled: true,
+          language: 'en',
+          autoUpdate: true,
+        );
+      });
     });
 
     testWidgets("Full app flow test", (WidgetTester tester) async {
       final getApps = GetApps(AppRepositoryImpl(mockDataSource));
+      final getSettings = GetSettings(mockSettingsRepository);
+      final updateSettings = UpdateSettings(mockSettingsRepository);
 
       await tester.pumpWidget(RoostApp(
         getApps: getApps,
         signIn: SignIn(mockAuthRepository),
         signUp: SignUp(mockAuthRepository),
         authRepository: mockAuthRepository,
+        getSettings: getSettings,
+        updateSettings: updateSettings,
       ));
 
       // Initial pause to see the login screen
